@@ -157,13 +157,13 @@
       ? `${money(inp.annualFees)} × ${H} yrs × ${pctSigned(net)} net (premium ${pctSigned(p.integratedFeeDiff)}, duplicated work −${pct1(p.dupWork)})`
       : `${money(inp.annualFees)} a year × ${H} yrs × ${pctSigned(p.integratedFeeDiff)}`;
     return [
-      { id: 'reviews', label: 'Agency reviews',
+      { id: 'reviews', label: 'Agency reviews', what: 'What you spend running a pitch each time you replace an agency. Specialists get replaced more often.',
         why: `${N} × (${H} ÷ ${f2(r.tenureS)} yrs) = ${f1(r.switchesS)} vs ${H} ÷ ${f2(r.tenureI)} = ${f1(r.switchesI)} switches${rps} × ${money(p.reviewCost)}` },
-      { id: 'coordination', label: 'Coordination time',
+      { id: 'coordination', label: 'Coordination time', what: "Your own team's hours managing each agency and the handoffs between them, valued at your staff's hourly cost.",
         why: `(${N} × ${h} h${pairs ? ` + ${pairs} pair${pairs > 1 ? 's' : ''} × ${p.handoffHours} h` : ''}) vs ${p.integratedCoordFactor} × ${h} h, a month × 12 × ${H} yrs × ${rate}` },
-      { id: 'transition', label: 'Handover overlap',
+      { id: 'transition', label: 'Handover overlap', what: 'Paying the old and the new agency at the same time while you switch.',
         why: `${f1(r.switchesS)} vs ${f1(r.switchesI)} switches × ${money(p.overlapCost)} × ${pct1(p.overlapShare)}` },
-      { id: 'fees', label: 'Fee premium', why: feeWhy },
+      { id: 'fees', label: 'Fee premium', what: 'What one integrated partner charges above the specialists.', why: feeWhy },
     ].map((x) => ({ ...x, line: r.lines.find((l) => l.id === x.id) }))
       .filter((x) => x.id !== 'fees' || x.line.diff !== 0);
   }
@@ -185,7 +185,7 @@
 
   function statRows(lines, why) {
     return lines
-      .map((x) => `<div class="stat"><span class="stat-num">${money(x.line.diff)}</span><span class="stat-cap">${why ? `<b>${esc(x.label)}</b><span>${esc(x.why)}</span>` : esc(x.label)}</span></div>`)
+      .map((x) => `<div class="stat"><span class="stat-num">${money(x.line.diff)}</span><span class="stat-cap"><b>${esc(x.label)}</b><span class="what">${esc(x.what || '')}</span>${why ? `<span class="calc">${esc(x.why)}</span>` : ''}</span></div>`)
       .join('');
   }
 

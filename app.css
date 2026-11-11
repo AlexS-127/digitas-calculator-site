@@ -173,7 +173,10 @@ button { font: inherit; }
 .stats-why .stat { align-items: flex-start; padding: 12px 0; }
 .stats-why .stat-num { font-size: 30px; min-width: 132px; }
 .stat-cap b { display: block; font-weight: 700; margin-bottom: 3px; }
-.stat-cap span { color: var(--muted); }
+.stat-cap .what { display: block; color: #e5e5e5; }
+.stat-cap .calc { display: block; margin-top: 4px; font-size: 12px; color: var(--muted); }
+.stats .stat { align-items: flex-start; padding: 10px 0; }
+.stats .stat-num { padding-top: 1px; }
 .rule-light { margin: 24px 0 10px; }
 .rule-grey { margin: 30px 0 20px; }
 .tags { display: flex; flex-wrap: wrap; gap: 8px; }
