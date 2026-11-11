@@ -350,22 +350,12 @@
       .join('');
   }
 
-  // ---------- match card ----------
-  // Lead practice: the ticked practice that the most proof cases share; then up to two supporting practices.
+  // ---------- past cases ----------
+  // Public Digitas cases that share the most practices with the ones ticked.
   function renderMatch() {
-    const picked = D.disciplines.filter((d) => state.disciplines.has(d.id));
-    if (!picked.length) { $('match').innerHTML = '<p class="note">Tick a practice to see your team.</p>'; return; }
-    const cases = relevantCases().slice(0, 2);
-    const score = (d) => cases.filter((c) => (c.tags || []).includes(d.id)).length;
-    const team = picked.slice().sort((a, b) => score(b) - score(a));
-    const lead = team[0], support = team.slice(1, 3);
-    const tile = (d, role) => `<div><p class="eyebrow">${role}</p><span class="practice-name">${esc(d.label)}</span>
-      <span class="practice-caps">${esc((d.capabilities || []).slice(0, 4).join(' · '))}</span></div>`;
+    const cases = relevantCases();
     $('match').innerHTML = `
-      <p class="eyebrow">Your Match Card</p>
-      <h2>Your Digitas team</h2>
-      <div class="match-team">${tile(lead, 'Lead practice')}${support.length ? `<div>${support.map((d) => tile(d, 'Supporting practice')).join('<br>')}</div>` : ''}</div>
-      <p class="eyebrow">Proof cases</p>
+      <h2>Past cases</h2>
       <div class="match-cases">${cases.map((c) => `
         <a class="match-case" href="${esc(c.url)}" target="_blank" rel="noopener">
           <span class="img" ${c.image ? `style="background-image:url('${esc(c.image)}')"` : ''}></span>
