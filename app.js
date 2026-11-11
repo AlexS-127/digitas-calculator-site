@@ -488,7 +488,8 @@
     renderSources();
     update();
 
-    if (location.protocol.startsWith('http')) {
+    // Only the local server (python3 server.py) has the Claude summary; skip the check on GitHub Pages.
+    if (/^(localhost|127\.0\.0\.1)$/.test(location.hostname)) {
       fetch('api/health')
         .then((r) => r.json())
         .then((d) => {
