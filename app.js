@@ -15,7 +15,6 @@
     p: D.values(),
     inp: {},
     fit: params.get('fit') || '',
-    team: params.get('team') === '1',
     server: false,
     claude: false,
     result: null,
@@ -223,7 +222,7 @@
     $('table').querySelector('tfoot').innerHTML = `<tr><th>Total over ${r.years} years, with fees</th><td>${money(r.totalS)}</td><td>${money(r.totalI)}</td><td>${money(r.gap)}</td></tr>`;
   }
 
-  // ---------- summary, talking points, case ----------
+  // ---------- summary and cases ----------
   function facts(r) {
     const inp = inputs();
     const labels = [...state.disciplines].map((id) => D.disciplines.find((d) => d.id === id).label);
@@ -271,22 +270,11 @@
       `The largest part is ${lines[0].label.toLowerCase()} (${money(lines[0].line.diff)}).` + be;
   }
 
-  function templatePoints(r) {
-    const labels = [...state.disciplines].map((id) => D.disciplines.find((d) => d.id === id).label);
-    return [
-      `Ask how often they have actually switched or re-pitched agencies, and compare with the ${r.switchesS.toFixed(1)} expected switches here.`,
-      'Verify what a review costs them in internal time; it drives the largest line.',
-      `Find where the work crosses ${labels.join(', ') || 'disciplines'} today. Make that the case, not the number of services.`,
-      'Bring a lead from each ticked practice and one case that matches the problem.',
-    ];
-  }
-
   function renderSummary(r) {
     const key = JSON.stringify([inputs(), state.p, state.fit]);
     if (key === state.summaryKey) return;
     state.summaryKey = key;
     $('summary-text').textContent = templateSummary(r);
-    $('talking-points').innerHTML = templatePoints(r).map((t) => `<li>${esc(t)}</li>`).join('');
     if (state.claude) {
       clearTimeout(state.genTimer);
       state.genTimer = setTimeout(() => generate(key), 1200);
@@ -306,7 +294,6 @@
       const d = await res.json();
       if (!res.ok || key !== state.summaryKey) return;
       $('summary-text').textContent = d.summary;
-      $('talking-points').innerHTML = d.talking_points.map((t) => `<li>${esc(t)}</li>`).join('');
     } catch {
       /* keep the template summary */
     }
@@ -400,12 +387,6 @@
     renderMatch();
   }
 
-  function setTeam(on) {
-    state.team = on;
-    $('team').hidden = !on;
-    $('team-toggle').textContent = on ? 'Client view' : 'Team view';
-  }
-
   function init() {
     state.inp = startingInputs();
     renderFee();
@@ -471,10 +452,8 @@
       update();
     };
     $('print').onclick = () => { renderSheet(state.result); window.print(); };
-    $('team-toggle').onclick = (e) => { e.preventDefault(); setTeam(!state.team); };
     window.addEventListener('beforeprint', () => renderSheet(state.result));
 
-    setTeam(state.team);
     renderSources();
     update();
 
