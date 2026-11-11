@@ -96,6 +96,14 @@ button { font: inherit; }
 .btn-dark:hover, .btn-light:hover { filter: brightness(0.92); }
 .pill-outline { font: 700 12px/1 var(--body); letter-spacing: 0.06em; text-transform: uppercase; border: 1px solid var(--line-2); border-radius: 8px; padding: 8px 12px; background: none; color: var(--white); cursor: pointer; }
 
+/* ---------- what the calculator counts ---------- */
+.counts { padding: 32px 40px 34px; margin-bottom: 20px; }
+.counts h2 { font: 800 26px/1.1 var(--head); color: var(--lime); margin-bottom: 20px; }
+.counts-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px; }
+.count { border-top: 2px solid var(--lime); padding-top: 14px; }
+.count-name { display: block; font: 800 18px/1.2 var(--head); margin-bottom: 8px; }
+.count p { font-size: 15px; line-height: 1.5; color: #e5e5e5; }
+
 /* ---------- practices ---------- */
 .practices-card { margin-bottom: 20px; }
 .practices { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px; }
@@ -295,6 +303,7 @@ button { font: inherit; }
   .practice-caps { font-size: 12px; }
 }
 @media (max-width: 760px) {
+  .counts-grid { grid-template-columns: 1fr; }
   .match-team, .match-cases { grid-template-columns: 1fr; }
   .practices { grid-template-columns: 1fr; }
   .mast { justify-content: center; }

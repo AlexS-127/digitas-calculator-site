@@ -185,7 +185,7 @@
 
   function statRows(lines, why) {
     return lines
-      .map((x) => `<div class="stat"><span class="stat-num">${money(x.line.diff)}</span><span class="stat-cap"><b>${esc(x.label)}</b><span class="what">${esc(x.what || '')}</span>${why ? `<span class="calc">${esc(x.why)}</span>` : ''}</span></div>`)
+      .map((x) => `<div class="stat"><span class="stat-num">${money(x.line.diff)}</span><span class="stat-cap"><b>${esc(x.label)}</b>${why ? `<span class="calc">${esc(x.why)}</span>` : ''}</span></div>`)
       .join('');
   }
 
