@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Integration Cost Calculator</title>
+<link rel="icon" href="data:,">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap">
+<link rel="stylesheet" href="app.css">
+</head>
+<body>
+<header class="mast">
+  <a class="mast-logo" href="#setup"><img src="assets/digitas-logo-white.png" alt="Digitas"></a>
+  <span class="mast-title">Integration Cost Calculator</span>
+</header>
+
+<main>
+  <!-- STEP 1 -->
+  <section class="step" id="setup" data-step="setup">
+    <div class="band band-yellow">
+      <div class="band-inner">
+        <h1>Specialist agencies cost more than their fees</h1>
+        <p>This calculator compares several specialist agencies with one integrated partner over 5 to 15 years. It counts what fees miss: replacing agencies more often, paying two agencies during each handover, and your team's time keeping them coordinated.</p>
+      </div>
+    </div>
+    <div class="wrap">
+      <div class="card pane practices-card">
+        <h2>Which practices does the problem touch?</h2>
+        <div id="disciplines" class="practices" role="group" aria-label="Practices"></div>
+      </div>
+      <div class="card split split-gap">
+        <form id="inputs" class="pane pane-dark" autocomplete="off" onsubmit="return false">
+          <div class="field fee-field">
+            <label class="label" id="fee-label" for="feeBasis"></label>
+            <span class="box"><b>$</b><input type="text" id="feeBasis" inputmode="numeric"></span>
+            <span class="derived" id="fee-derived"></span>
+            <span class="fee-modes" id="fee-modes"></span>
+          </div>
+          <fieldset class="field involvement-field">
+            <legend class="label">How hands-on is your team with each agency?</legend>
+            <div id="involvement" class="choices" role="group" aria-label="Team involvement"></div>
+          </fieldset>
+          <fieldset class="field">
+            <legend class="label">Time horizon</legend>
+            <div id="horizons" class="pills"></div>
+          </fieldset>
+        </form>
+        <aside class="pane pane-ivory live" aria-live="polite">
+
+          <p class="live-lede" id="live-lede"></p>
+          <p class="live-num" id="live-gap"></p>
+          <div class="rule-dark"></div>
+          <div id="live-lines" class="stats"></div>
+          <a class="btn btn-dark" href="#cost" id="see-breakdown">See the breakdown <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- STEP 2 -->
+  <section class="step step-cost" id="cost" data-step="cost">
+    <div class="band band-orange">
+      <div class="band-inner">
+        <span class="tag tag-dark" id="cost-tag"></span>
+        <h1 id="cost-headline"></h1>
+      </div>
+    </div>
+    <div class="wrap">
+      <div class="card split split-even">
+        <div class="pane pane-dark">
+          <p class="eyebrow">02 · Where the gap comes from</p>
+          <h2 id="cost-h2"></h2>
+          <div id="picked-tags" class="tags"></div>
+          <hr class="rule-light">
+          <div id="cost-lines" class="stats stats-why"></div>
+        </div>
+        <div class="pane pane-ivory">
+          <h3 class="eyebrow">Costs beyond base fees</h3>
+          <div id="bars"></div>
+          <div class="legend">
+            <span><i class="sw sw-reviews"></i>Reviews</span>
+            <span><i class="sw sw-transition"></i>Handover</span>
+            <span><i class="sw sw-coordination"></i>Coordination</span>
+            <span id="legend-fees"><i class="sw sw-fees"></i>Fee premium</span>
+          </div>
+          <h3 class="eyebrow">Expected agency switches</h3>
+          <div id="tracks"></div>
+        </div>
+      </div>
+
+      <div class="card pane-dark rests">
+        <button type="button" id="rests-toggle" class="rests-toggle" aria-expanded="false" aria-controls="rests-body">
+          <span>What this rests on</span><span class="pill-outline" id="rests-label">Show</span>
+        </button>
+        <div id="rests-body" hidden>
+          <div class="rests-grid">
+            <div>
+              <p class="eyebrow">Specialist tenure, by discipline</p>
+              <div id="tenure"></div>
+              <p class="eyebrow eyebrow-gap">Your setup</p>
+              <div id="setup-params"></div>
+            </div>
+            <div>
+              <p class="eyebrow">Research defaults</p>
+              <div id="params"></div>
+            </div>
+          </div>
+          <table id="table" class="totals">
+            <thead><tr><th></th><th>Specialists</th><th>One partner</th><th>Difference</th></tr></thead>
+            <tbody></tbody>
+            <tfoot></tfoot>
+          </table>
+          <div class="rests-foot">
+            <a href="methodology.html">Formulas and sources</a>
+            <button type="button" id="reset" class="pill-outline">Reset defaults</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card pane-dark summary" id="summary" hidden>
+        <p class="eyebrow">What this means for you</p>
+        <p id="summary-text"></p>
+
+        <div id="team" class="team" hidden>
+          <hr class="rule-grey">
+          <p class="eyebrow">For the new-business team</p>
+          <ul id="talking-points"></ul>
+        </div>
+      </div>
+
+      <div id="match" class="card match"></div>
+
+      <div class="actions">
+        <button type="button" class="btn btn-light" id="print"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg> One-page summary (PDF)</button>
+      </div>
+
+      <div class="card sources-card">
+        <p class="eyebrow">Sources</p>
+        <ol id="sources-list" class="sources-list"></ol>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <span>Student prototype, BUS 365, Emory University. Not an official Digitas tool.</span>
+  <span><a href="methodology.html">Formulas and sources</a> · <a href="#" id="team-toggle">Team view</a></span>
+</footer>
+
+<div id="sheet" class="sheet" aria-hidden="true"></div>
+
+<script src="defaults.js"></script>
+<script src="model.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

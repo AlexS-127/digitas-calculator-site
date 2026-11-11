@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How the Calculator Works</title>
+<link rel="icon" href="data:,">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap">
+<link rel="stylesheet" href="app.css">
+</head>
+<body>
+<header class="mast">
+  <a class="mast-logo" href="index.html"><img src="assets/digitas-logo-white.png" alt="Digitas"></a>
+  <span class="mast-title">Integration Cost Calculator</span>
+</header>
+
+<main class="doc">
+    <h1>Formulas, defaults <em>and sources.</em></h1>
+  <p class="lede">Every number in the calculator comes from your inputs or from the defaults below. Each default is marked sourced (from a published study), derived (computed from sourced figures) or assumed (our estimate, to replace with your own).</p>
+
+  <section class="doc-card">
+    <h2>What is compared</h2>
+    <p>A client working with <b>N</b> specialist agencies, one per discipline, against one integrated partner covering the same scope, over a horizon of <b>H</b> years. Fees are assumed equal unless you change the fee difference, so the gap comes from the costs around the fees.</p>
+  </section>
+
+  <section class="doc-card">
+    <h2>Formulas</h2>
+    <table class="doc-table">
+      <thead><tr><th>Cost</th><th>Specialists</th><th>Integrated partner</th></tr></thead>
+      <tbody>
+        <tr><th>Expected switches</th><td>N × H × average of (1 ÷ tenure) over the ticked disciplines</td><td>H ÷ integrated tenure</td></tr>
+        <tr><th>Agency reviews</th><td>switches × reviews per switch × review cost</td><td>same</td></tr>
+        <tr><th>Handover overlap</th><td>switches × overlap cost × share with overlap</td><td>same</td></tr>
+        <tr><th>Coordination time</th><td>(N × hours + pairs × handoff hours) × 12 × H × hourly cost, pairs = N(N − 1) ÷ 2</td><td>coordination factor × hours × 12 × H × hourly cost</td></tr>
+        <tr><th>Agency fees</th><td>fees × H</td><td>fees × (1 + fee difference) × H</td></tr>
+      </tbody>
+    </table>
+    <p class="note" style="margin-top:14px">A relationship that lasts T years on average ends at a rate of 1 ÷ T per year (steady state, our derivation). Three specialists in creative, media and CRM (6.75, 5.94 and 6.29 years) make about 4.8 switches in 10 years; one integrated partner at 7.96 years makes about 1.3. The chart spaces switches evenly at that average rate; real ones are lumpier.</p>
+  </section>
+
+  <section class="doc-card" id="tenure">
+    <h2>Specialist tenure by discipline</h2>
+    <p>Client-reported average tenure of agency-of-record relationships, by agency type (ANA survey of 106 client-side members, fielded 2024). Where our discipline has no matching agency type, the mapping is our assumption.</p>
+    <div id="tenure-list"></div>
+  </section>
+
+  <section class="doc-card">
+    <h2>Defaults</h2>
+    <div id="params"></div>
+  </section>
+
+  <section class="doc-card" id="inputs-card">
+    <h2>Starting inputs</h2>
+    <div id="inputs"></div>
+  </section>
+
+  <section class="doc-card">
+    <h2>What it leaves out</h2>
+    <ul>
+      <li>Performance: integrated work may also perform better (IPA). The calculator counts costs only.</li>
+      <li>Fees by scope: Digitas does not share rate cards, so fees are your input, not a benchmark.</li>
+      <li>One client's experience can differ a lot from industry averages. Use your own tenure and review costs where you know them.</li>
+    </ul>
+  </section>
+
+  <section class="doc-card">
+    <h2>Sources</h2>
+    <ol id="sources" class="sources"></ol>
+  </section>
+</main>
+
+<footer class="foot">
+  <span>Student prototype for BUS 365, Emory University. Not an official Digitas tool.</span>
+  <span><a href="index.html">Back to the calculator</a></span>
+</footer>
+
+<script src="defaults.js"></script>
+<script src="methodology.js"></script>
+</body>
+</html>
